@@ -4,6 +4,7 @@ let ctx = canvas.getContext("2d");
 //criação do snake tendo em conta o tamanho da imagem
 
 let square = 32;
+let move;
 
 //dar draw() do ground 
 
@@ -33,6 +34,44 @@ let foodPos =
     y: Math.floor(Math.random() * 15 + 3) * square,
 }
 
+//event listener
+
+
+
+document.addEventListener("keydown", function(event){
+    //e.preventDefault();
+    console.log(event);
+    if(event.keyCode==65)
+    {
+        move="left";
+    }
+    else if(event.keyCode==87){
+        move="top";
+    }
+    else if(event.keyCode==68){
+        move="right";
+    }
+    else if(event.keyCode==83){
+        move="down";
+    }
+    console.log(move);
+})
+        
+    /*switch(event){
+        case "ArrowLeft":
+            move:left;
+        case "Arrow Up":
+            move:"top";
+        case ""
+        
+    }
+
+
+    // switch (tecla) {
+        //case "ArrowLeft":
+)
+*/
+
 function draw(){
 
     for(let i=0; i<snake.length; i++){
@@ -40,6 +79,37 @@ function draw(){
         ctx.fillStyle = (i == 0) ? "black":"red";
         ctx.fillRect(snake[i].x,snake[i].y,square,square);
     }
+
+    //ver a posição anterior da snake e mover
+
+    let snakeX= snake[0].x;
+    let snakeY= snake[0].y;
+    //qualquer merda da cor não dar fill
+    snake.pop();
+    if(move=="left")
+    {
+        snakeX-=square;
+    }
+    else if(move=="top")
+    {
+        snakeY-=square;
+    }
+    else if(move=="right")
+    {
+        snakeX+=square;
+    }
+    else if(move=="down")
+    {
+        snakeY+=square;
+    }
+
+    //Ciração de novo quadrado
+    let newSquare = {
+        x:snakeX,
+        y:snakeY,
+    }
+    snake.unshift(newSquare);
+
     //draw da comida
     ctx.drawImage(food,0,0,square,square,foodPos.x,foodPos.y,square,square);
 
