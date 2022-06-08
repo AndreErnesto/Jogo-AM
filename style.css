@@ -1,0 +1,13 @@
+h1{
+    text-align: center;
+    font-family: Courier;
+    margin:10px;
+}
+
+canvas{
+    width:608px;
+    height: 608px;
+    box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.2) ;
+    position: absolute;
+    left: 35%;
+}
