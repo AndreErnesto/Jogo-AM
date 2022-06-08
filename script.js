@@ -10,15 +10,27 @@ let square = 32;
 let floor = new Image();
 floor.src = "images/floor.jpg";
 
+//dar draw() da comida
+
+let food = new Image();
+food.src = "images/food.png";
+
 
 //criação do array da snake
 //Criação das propriedades do snake
 let snake = [];
 
-
 snake[0] = {
  x: 4*32,
  y: 7*32
+}
+
+//Criação do object food no mapa num sitio Random pelo número de X e número de Y (o mais 1 e 3 serve para ignorar a border)
+
+let foodPos =
+{
+    x: Math.floor(Math.random() * 17 + 1) * square,
+    y: Math.floor(Math.random() * 15 + 3) * square,
 }
 
 function draw(){
@@ -28,6 +40,8 @@ function draw(){
         ctx.fillStyle = (i == 0) ? "black":"red";
         ctx.fillRect(snake[i].x,snake[i].y,square,square);
     }
+    //draw da comida
+    ctx.drawImage(food,0,0,square,square,foodPos.x,foodPos.y,square,square);
 
 }
 
@@ -38,5 +52,4 @@ function loop()
         draw();
 
     }
-
    let game = setInterval(loop , 100);
