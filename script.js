@@ -16,6 +16,9 @@ floor.src = "images/floor.jpg";
 let food = new Image();
 food.src = "images/food.png";
 
+let gameOver = new Image();
+gameOver.src = "images/gameover.png";
+
 
 //criação do array da snake
 //Criação das propriedades do snake
@@ -120,10 +123,25 @@ function draw(){
         //cor criar fill
         snake.pop();
     }
+
+    //Vai verificar se a colisão é verdadeira ou falsa
+    function collision(head, array)
+    {
+        for(let i=0;i<array.length;i++)
+        {
+            if(newSquare.x ==array[i].x && newSquare.y ==array[i].y)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     //Criar colisões na paredes para acabar com o jogo
-    if(snakeX<square || snakeX>square*15 || snakeY<square*3 || snakeY>square*17)
+    if(snakeX<square || snakeX>square*17 || snakeY<square*3 || snakeY>square*17 ||collision(newSquare, snake))
     {
         clearInterval(game);
+        ctx.drawImage(gameOver,0,0,512,371,canvas.width/2-100, canvas.height/2-100,200,200);
+
     }
 
     snake.unshift(newSquare);
