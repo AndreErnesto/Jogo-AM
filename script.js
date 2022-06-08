@@ -5,6 +5,7 @@ let ctx = canvas.getContext("2d");
 
 let square = 32;
 let move;
+let score = 0;
 
 //dar draw() do ground 
 
@@ -115,8 +116,11 @@ function draw(){
     }
     //detetar colisão com a comida
     if(snakeX==foodPos.x && snakeY==foodPos.y){
+        
         foodPos.x = Math.floor(Math.random() * 17 + 1) * square;
         foodPos.y = Math.floor(Math.random() * 15 + 3) * square;
+        //Incrementar score
+        score++;
     }
     else
     {
@@ -145,6 +149,13 @@ function draw(){
     }
 
     snake.unshift(newSquare);
+
+    //Criação do número de score
+    ctx.fillStyle="#ffffff";
+    ctx.font="40px impact";
+    //Posição do número
+    ctx.fillText(score,square*2.5,square*1.7);
+
 
     //draw da comida
     ctx.drawImage(food,0,0,square,square,foodPos.x,foodPos.y,square,square);
