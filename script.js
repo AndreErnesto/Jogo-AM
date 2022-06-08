@@ -41,17 +41,17 @@ let foodPos =
 document.addEventListener("keydown", function(event){
     //e.preventDefault();
     console.log(event);
-    if(event.keyCode==65)
+    if(event.keyCode==65 && move!="right")
     {
         move="left";
     }
-    else if(event.keyCode==87){
+    else if(event.keyCode==87 && move!="down"){
         move="top";
     }
-    else if(event.keyCode==68){
+    else if(event.keyCode==68 && move!="left"){
         move="right";
     }
-    else if(event.keyCode==83){
+    else if(event.keyCode==83 && move!="top"){
         move="down";
     }
     console.log(move);
@@ -76,16 +76,18 @@ function draw(){
 
     for(let i=0; i<snake.length; i++){
         //fill estilo do snake
-        ctx.fillStyle = (i == 0) ? "black":"red";
+        ctx.fillStyle = (i == 0) ? "black":"yellow";
         ctx.fillRect(snake[i].x,snake[i].y,square,square);
+        //criar estilo de stroke na snake
+        ctx.strokeStyle ="#000000"
+        ctx.strokeRect(snake[i].x,snake[i].y,square,square);
     }
 
     //ver a posição anterior da snake e mover
 
     let snakeX= snake[0].x;
     let snakeY= snake[0].y;
-    //qualquer merda da cor não dar fill
-    snake.pop();
+    
     if(move=="left")
     {
         snakeX-=square;
@@ -108,6 +110,22 @@ function draw(){
         x:snakeX,
         y:snakeY,
     }
+    //detetar colisão com a comida
+    if(snakeX==foodPos.x && snakeY==foodPos.y){
+        foodPos.x = Math.floor(Math.random() * 17 + 1) * square;
+        foodPos.y = Math.floor(Math.random() * 15 + 3) * square;
+    }
+    else
+    {
+        //cor criar fill
+        snake.pop();
+    }
+    //Criar colisões na paredes para acabar com o jogo
+    if(snakeX<square || snakeX>square*15 || snakeY<square*3 || snakeY>square*17)
+    {
+        clearInterval(game);
+    }
+
     snake.unshift(newSquare);
 
     //draw da comida
