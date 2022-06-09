@@ -8,6 +8,7 @@ let move;
 let score = 0;
 //variável de som com boolean para depois este parar em gameOver
 let sound = true;
+//let speed = 1;
 
 //dar draw() do ground 
 
@@ -140,6 +141,7 @@ function draw() {
         x: snakeX,
         y: snakeY,
     }
+
     //detetar colisão com a comida
     if (snakeX == foodPos.x && snakeY == foodPos.y) {
         eatsound.play();
@@ -172,7 +174,7 @@ function draw() {
 
     snake.unshift(newSquare);
 
-    //Criação do número de score
+    //Criação do número de score no canvas
     ctx.fillStyle = "#ffffff";
     ctx.font = "40px impact";
     //Posição do número
@@ -188,6 +190,20 @@ function draw() {
 function loop() {
     ctx.drawImage(floor, 0, 0, 608, 608, 0, 0, 608, 608);
     draw();
-
 }
-let game = setInterval(loop, 100);
+
+// setTimeout(() => {
+//     square.speed = 200;
+// }, 15000);
+
+//
+
+/*square.x += speed *Math.sin()
+
+this.newPos = function() {
+    this.x += this.speed * Math.sin(this.angle);
+    this.y -= this.speed * Math.cos(this.angle);
+  }
+*/
+let game = setInterval(loop, 150);
+
