@@ -22,17 +22,17 @@ gameOver.src = "images/gameover.png";
 
 //Adição dos sons
 let deadsound = new Audio();
-deadsound.src="audio/dead.mp3"
+deadsound.src="./audio/dead.mp3"
 let downsound = new Audio();
-downsound.src="audio/down.mp3"
+downsound.src="./audio/down.mp3"
 let upsound = new Audio();
-upsound.src="audio/up.mp3"
+upsound.src="./audio/up.mp3"
 let rightsound = new Audio();
-rightsound.src="audio/right.mp3"
+rightsound.src="./audio/right.mp3"
 let leftsound = new Audio();
-leftsound.src="audio/left.mp3"
+leftsound.src="./audio/left.mp3"
 let eatsound = new Audio();
-eatsound.src="audio/eat.mp3"
+eatsound.src="./audio/eat.mp3"
 
 //criação do array da snake
 //Criação das propriedades do snake
