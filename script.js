@@ -20,6 +20,19 @@ food.src = "images/food.png";
 let gameOver = new Image();
 gameOver.src = "images/gameover.png";
 
+//Adição dos sons
+let deadsound = new Audio();
+deadsound.src="audio/dead.mp3"
+let downsound = new Audio();
+downsound.src="audio/down.mp3"
+let upsound = new Audio();
+upsound.src="audio/up.mp3"
+let rightsound = new Audio();
+rightsound.src="audio/right.mp3"
+let leftsound = new Audio();
+leftsound.src="audio/left.mp3"
+let eatsound = new Audio();
+eatsound.src="audio/eat.mp3"
 
 //criação do array da snake
 //Criação das propriedades do snake
@@ -46,16 +59,20 @@ document.addEventListener("keydown", function(event){
     //e.preventDefault();
     console.log(event);
     if(event.keyCode==65 && move!="right")
-    {
+    {   
+        leftsound.play();
         move="left";
     }
     else if(event.keyCode==87 && move!="down"){
+        upsound.play();
         move="top";
     }
     else if(event.keyCode==68 && move!="left"){
+        rightsound.play();
         move="right";
     }
     else if(event.keyCode==83 && move!="top"){
+        downsound.play();
         move="down";
     }
     console.log(move);
@@ -116,7 +133,7 @@ function draw(){
     }
     //detetar colisão com a comida
     if(snakeX==foodPos.x && snakeY==foodPos.y){
-        
+        eatsound.play();
         foodPos.x = Math.floor(Math.random() * 17 + 1) * square;
         foodPos.y = Math.floor(Math.random() * 15 + 3) * square;
         //Incrementar score
@@ -142,7 +159,8 @@ function draw(){
     }
     //Criar colisões na paredes para acabar com o jogo
     if(snakeX<square || snakeX>square*17 || snakeY<square*3 || snakeY>square*17 ||collision(newSquare, snake))
-    {
+    {   
+        deadsound.play();
         clearInterval(game);
         ctx.drawImage(gameOver,0,0,512,371,canvas.width/2-100, canvas.height/2-100,200,200);
 
