@@ -205,5 +205,6 @@ this.newPos = function() {
     this.y -= this.speed * Math.cos(this.angle);
   }
 */
+//150
 let game = setInterval(loop, 150);
 
