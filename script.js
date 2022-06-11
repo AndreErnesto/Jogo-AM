@@ -9,6 +9,7 @@ let score = 0;
 //variável de som com boolean para depois este parar em gameOver
 let sound = true;
 //let speed = 1;
+let pause=false;
 
 //dar draw() do ground 
 
@@ -37,6 +38,8 @@ leftsound.src = "./audio/left.mp3"
 let eatsound = new Audio();
 eatsound.src = "./audio/eat.mp3"
 
+//Buscar o gif
+
 //criação do array da snake
 //Criação das propriedades do snake
 let snake = [];
@@ -55,8 +58,6 @@ let foodPos =
 }
 
 //event listener
-
-
 
 document.addEventListener("keydown", function (event) {
     //e.preventDefault();
@@ -88,9 +89,24 @@ document.addEventListener("keydown", function (event) {
         }
         //downsound.play(); 
         move = "down";
+    }else if (event.keycode == 27){
+        if(pause = false){
+            resumeGame();
+        }  else{
+            pauseGame();
+        } 
     }
     console.log(move);
 })
+
+function resumeGame(){
+}
+
+function pauseGame(){
+    clearInterval(interval);
+    pause=true;
+    ctx.style.opacity= 0.5;
+}
 
 /*switch(event){
     case "ArrowLeft":
@@ -111,7 +127,11 @@ function draw() {
 
     for (let i = 0; i < snake.length; i++) {
         //fill estilo do snake
-        ctx.fillStyle = (i == 0) ? "black" : "yellow";
+        ctx.fillStyle = (i == 0) ? "black" : "red";
+        if(i%2==0)
+        {
+            ctx.fillStyle="black";
+        }
         ctx.fillRect(snake[i].x, snake[i].y, square, square);
         //criar estilo de stroke na snake
         ctx.strokeStyle = "#000000"
@@ -164,12 +184,34 @@ function draw() {
         }
         return false;
     }
+    
+    function snakeGif(){
+        let snakeImg = document.getElementById("snake");
+            snakeImg.style.display="block";  
+    }
+
+    function restartButton(){
+        let restartBtn = document.getElementById("restart");
+            restartBtn.style.display="block";     
+    }
+
+    //tentar dar restartd NÃO ESTÁ A DAR
+    function again(){
+        document.getElementById("restart").addEventListener("click", function restart(){
+            score=0;
+        })
+    }
+
     //Criar colisões na paredes para acabar com o jogo
     if (snakeX < square || snakeX > square * 17 || snakeY < square * 3 || snakeY > square * 17 || collision(newSquare, snake)) {
+        again();
+        restartButton();
+        snakeGif();
         deadsound.play();
         clearInterval(game);
-        ctx.drawImage(gameOver, 0, 0, 512, 371, canvas.width / 2 - 100, canvas.height / 2 - 100, 200, 200);
+        ctx.drawImage(gameOver, 0, 0, 512, 371, canvas.width / 2 - 100, canvas.height / 2 - 200, 200, 200);
         sound = false;
+        //snake();
     }
 
     snake.unshift(newSquare);
@@ -186,25 +228,14 @@ function draw() {
 
 }
 
+
 //criação do loop da imagem
 function loop() {
     ctx.drawImage(floor, 0, 0, 608, 608, 0, 0, 608, 608);
     draw();
 }
 
-// setTimeout(() => {
-//     square.speed = 200;
-// }, 15000);
 
-//
-
-/*square.x += speed *Math.sin()
-
-this.newPos = function() {
-    this.x += this.speed * Math.sin(this.angle);
-    this.y -= this.speed * Math.cos(this.angle);
-  }
-*/
-//150
 let game = setInterval(loop, 150);
+
 

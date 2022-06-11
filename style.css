@@ -3,12 +3,67 @@ h1 {
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
     margin: 10px;
+    font-size: 100px;
+    background-color: #ffffff;
+    background-image: linear-gradient(#ff0000,#590000, black);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
 }
 
 canvas {
-
     box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.2);
     position: absolute;
-    left: 35%;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
+}
+
+div{
+    color:white;
+    text-align: center;
+    height: 180px;
+    width:200px;
+    background-image: linear-gradient(#ff0000,#590000, black);
+    font-family: Courier;
+    position: absolute;
+    top:45%;
+    left:20%;
+}
+h2{
+    font-size: 30px;
+    text-decoration: underline white;
+}
+
+dt{
+    font-size: 20px;
+    text-decoration: underline white;
+}
+
+.snake{
+    height: 166px;
+    width: 175px;
+    background-position: center center;
+    position: absolute;
+    top: 50%;
+    left:46.5%;
+    display: none;
+    background-image: url("/images/snake.gif"), linear-gradient(#ff0000,#590000, black);
+}
+
+.restart{
+
+    position: absolute;
+    top:65%;
+    left:48%;
+    background-image:linear-gradient(#ff0000,#590000, black);
+    color: white;
+    display: none;
+    font-size: 20px;
+    font-family: Courier;
 }
 
