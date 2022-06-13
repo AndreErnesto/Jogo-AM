@@ -2,6 +2,7 @@ let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
 let menuGameOver = document.getElementById("menuGameOver");
+let pausa = document.getElementById("pause");
 
 //criação do snake tendo em conta o tamanho da imagem
 
@@ -38,8 +39,6 @@ leftsound.src = "./audio/left.mp3";
 let eatsound = new Audio();
 eatsound.src = "./audio/eat.mp3";
 
-//Buscar o gif
-
 //criação do array da snake
 //Criação das propriedades do snake
 let snake = [];
@@ -59,7 +58,6 @@ let foodPos = {
 //event listener
 
 document.addEventListener("keydown", function (event) {
-    //e.preventDefault();
     console.log(event);
     const tecla = event.key.toUpperCase();
     if (tecla == "A" && move != "right") {
@@ -82,8 +80,10 @@ document.addEventListener("keydown", function (event) {
             downsound.play();
         }
         move = "down";
-    } else if (tecla == "ESCAPE") {
+    } else if (tecla == "ESCAPE" && gameOver == false) {
         pause = !pause;
+        pausa.classList.toggle("show");
+        sound = false;
     }
     console.log(move);
 });
@@ -154,12 +154,12 @@ function draw() {
         //Incrementar score
         score++;
     } else {
-        //cor criar fill
+        //remove a comdia e volta a criar
         snake.pop();
     }
 
     //Vai verificar se a colisão é verdadeira ou falsa
-    function collision(head, array) {
+    function collision(array) {
         for (let i = 0; i < array.length; i++) {
             if (newSquare.x == array[i].x && newSquare.y == array[i].y) {
                 return true;
@@ -168,7 +168,7 @@ function draw() {
         return false;
     }
 
-    //tentar dar restartd NÃO ESTÁ A DAR
+    //Restart no botão
 
     let btnRestart = document.getElementById("restart");
     btnRestart.addEventListener("click", function () {
@@ -196,9 +196,7 @@ function draw() {
         menuGameOver.classList.toggle("hide");
         deadsound.play();
     }
-
     //Criação do número de score no canvas
-
     snake.unshift(newSquare);
 }
 
@@ -206,6 +204,7 @@ function draw() {
 function loop() {
     ctx.drawImage(floor, 0, 0, 608, 608, 0, 0, 608, 608);
     if (!gameOver && !pause) {
+        sound = true;
         draw();
     }
     drawScore();

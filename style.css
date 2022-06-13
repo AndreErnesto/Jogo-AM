@@ -1,4 +1,4 @@
-h1 {
+.Titulo {
     user-select: none;
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
@@ -23,7 +23,7 @@ canvas {
     margin:auto;
 }
 
-div{
+#div{
     color:white;
     text-align: center;
     height: 180px;
@@ -34,7 +34,7 @@ div{
     top:45%;
     left:20%;
 }
-h2{
+.Intrucoes{
     font-size: 30px;
     text-decoration: underline white;
 }
@@ -44,25 +44,42 @@ dt{
     text-decoration: underline white;
 }
 
+div#menuGameOver{
+    height: 608px;
+    width: 608px;
+    top: 26.6%;
+    left: 38.1%;
+    position: absolute;
+    background: rgb(112, 112, 112);
+    opacity: 0.9;
+
+}
+
 .snake{
+    margin: auto;
     height: 166px;
     width: 175px;
     background-position: center center;
-    position: absolute;
-    top: 50%;
-    left:46.5%;
     background-image: url("/images/snake.gif"), linear-gradient(#ff0000,#590000, black);
 }
 
 .restart{
-
-    position: absolute;
-    top:65%;
-    left:48%;
+   
     background-image:linear-gradient(#ff0000,#590000, black);
     color: white;
-    font-size: 20px;
+    font-size: 39px;
     font-family: Courier;
+    left: 35%;
+    margin-top: 5%;
+    position: absolute;
+}
+
+img#imgGameOver{
+    height: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 
 .hide{
@@ -71,3 +88,45 @@ dt{
 
 }
 
+.pause{
+
+    display:none;
+
+}
+
+.show{
+    height: 608px;
+    width: 608px;
+    position: absolute;
+    top: 26.6%;
+    left: 38.1%;
+    background: rgb(112, 112, 112);
+    opacity: 0.9;
+    display: inherit;
+
+}
+
+.pausaText{
+    font-size: 150px;
+    text-align: center;
+    background-color: #000000;
+    background-image: linear-gradient(#c70202,#590000, black);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+}
+
+.retomarText{
+    font-size: 50px;
+    text-align: center;
+    background-color: #000000;
+    background-image: linear-gradient(#c70202,#590000, black);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    text-decoration: underline solid rgb(0, 0, 0) 5px;
+}

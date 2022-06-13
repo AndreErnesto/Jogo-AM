@@ -11,23 +11,27 @@
 <body>
 
     <div id="div">
-        <h2>Intruções</h2>
+        <h2 class="Intrucoes">Intruções</h2>
         <dl>
             <dt>Mover</dt>
             <dd>W,A,S,D</dd>
-            <dt>Restart</dt>
-            <dd>Clicar f5</dd>
+            <dt>Pausa</dt>
+            <dd>ESC</dd>
           </dl>
     </div>
 
 
-    <h1>Jogo Snake</h1>
+    <h1 class="Titulo">Jogo Snake</h1>
     
     <canvas id="canvas" width="608" height="608"></canvas>
     <div class="hide" id="menuGameOver">
-        <img src="/images/gameover.png">
+        <img id="imgGameOver" src="/images/gameover.png">
         <div class="snake" id="snake"></div>
         <button class="restart" id="restart">Restart</button>
+    </div>
+    <div class="pause" id="pause">
+        <h1 class="pausaText" readonly>Pausa</h1>
+        <h2 class="retomarText"> Retomar:Clicar ESC</h2>
     </div>
     
 
