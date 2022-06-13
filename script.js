@@ -85,7 +85,6 @@ document.addEventListener("keydown", function (event) {
         pausa.classList.toggle("show");
         sound = false;
     }
-    console.log(move);
 });
 
 function drawScore() {

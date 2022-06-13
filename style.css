@@ -35,13 +35,20 @@ canvas {
     left:20%;
 }
 .Intrucoes{
+    user-select: none;
     font-size: 30px;
     text-decoration: underline white;
 }
 
 dt{
+    user-select: none;
     font-size: 20px;
     text-decoration: underline white;
+}
+
+dd{
+   text-align: center;
+   user-select: none;
 }
 
 div#menuGameOver{
@@ -107,6 +114,7 @@ img#imgGameOver{
 }
 
 .pausaText{
+    user-select: none;
     font-size: 150px;
     text-align: center;
     background-color: #000000;
@@ -119,6 +127,7 @@ img#imgGameOver{
 }
 
 .retomarText{
+    user-select: none;
     font-size: 50px;
     text-align: center;
     background-color: #000000;
