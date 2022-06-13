@@ -1,6 +1,8 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
+let menuGameOver = document.getElementById("menuGameOver");
+
 //criação do snake tendo em conta o tamanho da imagem
 
 let square = 32;
@@ -9,9 +11,10 @@ let score = 0;
 //variável de som com boolean para depois este parar em gameOver
 let sound = true;
 //let speed = 1;
-let pause=false;
+let pause = false;
+let gameOver = false;
 
-//dar draw() do ground 
+//dar draw() do ground
 
 let floor = new Image();
 floor.src = "images/floor.jpg";
@@ -21,22 +24,19 @@ floor.src = "images/floor.jpg";
 let food = new Image();
 food.src = "images/food.png";
 
-let gameOver = new Image();
-gameOver.src = "images/gameover.png";
-
 //Adição dos sons
 let deadsound = new Audio();
-deadsound.src = "./audio/dead.mp3"
+deadsound.src = "./audio/dead.mp3";
 let downsound = new Audio();
-downsound.src = "./audio/down.mp3"
+downsound.src = "./audio/down.mp3";
 let upsound = new Audio();
-upsound.src = "./audio/up.mp3"
+upsound.src = "./audio/up.mp3";
 let rightsound = new Audio();
-rightsound.src = "./audio/right.mp3"
+rightsound.src = "./audio/right.mp3";
 let leftsound = new Audio();
-leftsound.src = "./audio/left.mp3"
+leftsound.src = "./audio/left.mp3";
 let eatsound = new Audio();
-eatsound.src = "./audio/eat.mp3"
+eatsound.src = "./audio/eat.mp3";
 
 //Buscar o gif
 
@@ -46,98 +46,85 @@ let snake = [];
 
 snake[0] = {
     x: 4 * 32,
-    y: 7 * 32
-}
+    y: 7 * 32,
+};
 
 //Criação do object food no mapa num sitio Random pelo número de X e número de Y (o mais 1 e 3 serve para ignorar a border)
 
-let foodPos =
-{
+let foodPos = {
     x: Math.floor(Math.random() * 17 + 1) * square,
     y: Math.floor(Math.random() * 15 + 3) * square,
-}
+};
 
 //event listener
 
 document.addEventListener("keydown", function (event) {
     //e.preventDefault();
     console.log(event);
-    if (event.keyCode == 65 && move != "right") {
-        if (sound) {
+    const tecla = event.key.toUpperCase();
+    if (tecla == "A" && move != "right") {
+        if (sound && move !== "left") {
             leftsound.play();
         }
-        //leftsound.play();
         move = "left";
-    }
-    else if (event.keyCode == 87 && move != "down") {
-        if (sound) {
+    } else if (tecla == "W" && move != "down") {
+        if (sound && move !== "top") {
             upsound.play();
         }
-        //upsound.play();
         move = "top";
-    }
-    else if (event.keyCode == 68 && move != "left") {
-        if (sound) {
+    } else if (tecla == "D" && move != "left") {
+        if (sound && move !== "right") {
             rightsound.play();
         }
-        //rightsound.play();
         move = "right";
-    }
-    else if (event.keyCode == 83 && move != "top") {
-        if (sound) {
+    } else if (tecla == "S" && move != "top") {
+        if (sound && move !== "down") {
             downsound.play();
         }
-        //downsound.play(); 
         move = "down";
-    }else if (event.keycode == 27){
-        if(pause = false){
-            resumeGame();
-        }  else{
-            pauseGame();
-        } 
+    } else if (tecla == "ESCAPE") {
+        pause = !pause;
     }
     console.log(move);
-})
+});
 
-function resumeGame(){
+function drawScore() {
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "40px impact";
+    //Posição do número
+    ctx.fillText(score, square * 2.5, square * 1.7);
 }
 
-function pauseGame(){
-    clearInterval(interval);
-    pause=true;
-    ctx.style.opacity= 0.5;
-}
-
-/*switch(event){
-    case "ArrowLeft":
-        move:left;
-    case "Arrow Up":
-        move:"top";
-    case ""
-    
-}
-
-
-// switch (tecla) {
-    //case "ArrowLeft":
-)
-*/
-
-function draw() {
-
+function drawSnake() {
     for (let i = 0; i < snake.length; i++) {
         //fill estilo do snake
-        ctx.fillStyle = (i == 0) ? "black" : "red";
-        if(i%2==0)
-        {
-            ctx.fillStyle="black";
+        ctx.fillStyle = i == 0 ? "black" : "red";
+        if (i % 2 == 0) {
+            ctx.fillStyle = "black";
         }
         ctx.fillRect(snake[i].x, snake[i].y, square, square);
         //criar estilo de stroke na snake
-        ctx.strokeStyle = "#000000"
+        ctx.strokeStyle = "#000000";
         ctx.strokeRect(snake[i].x, snake[i].y, square, square);
     }
+}
 
+function drawFood() {
+    //draw da comida
+    ctx.drawImage(
+        food,
+        0,
+        0,
+        square,
+        square,
+        foodPos.x,
+        foodPos.y,
+        square,
+        square
+    );
+}
+
+function draw() {
     //ver a posição anterior da snake e mover
 
     let snakeX = snake[0].x;
@@ -145,14 +132,11 @@ function draw() {
 
     if (move == "left") {
         snakeX -= square;
-    }
-    else if (move == "top") {
+    } else if (move == "top") {
         snakeY -= square;
-    }
-    else if (move == "right") {
+    } else if (move == "right") {
         snakeX += square;
-    }
-    else if (move == "down") {
+    } else if (move == "down") {
         snakeY += square;
     }
 
@@ -160,7 +144,7 @@ function draw() {
     let newSquare = {
         x: snakeX,
         y: snakeY,
-    }
+    };
 
     //detetar colisão com a comida
     if (snakeX == foodPos.x && snakeY == foodPos.y) {
@@ -169,8 +153,7 @@ function draw() {
         foodPos.y = Math.floor(Math.random() * 15 + 3) * square;
         //Incrementar score
         score++;
-    }
-    else {
+    } else {
         //cor criar fill
         snake.pop();
     }
@@ -184,58 +167,50 @@ function draw() {
         }
         return false;
     }
-    
-    function snakeGif(){
-        let snakeImg = document.getElementById("snake");
-            snakeImg.style.display="block";  
-    }
-
-    function restartButton(){
-        let restartBtn = document.getElementById("restart");
-            restartBtn.style.display="block";     
-    }
 
     //tentar dar restartd NÃO ESTÁ A DAR
-    function again(){
-        document.getElementById("restart").addEventListener("click", function restart(){
-            score=0;
-        })
-    }
+
+    let btnRestart = document.getElementById("restart");
+    btnRestart.addEventListener("click", function () {
+        gameOver = false;
+        score = 0;
+        move = null;
+        snake = [];
+
+        snake[0] = {
+            x: 4 * 32,
+            y: 7 * 32,
+        };
+        menuGameOver.classList.toggle("hide");
+    });
 
     //Criar colisões na paredes para acabar com o jogo
-    if (snakeX < square || snakeX > square * 17 || snakeY < square * 3 || snakeY > square * 17 || collision(newSquare, snake)) {
-        again();
-        restartButton();
-        snakeGif();
+    if (
+        snakeX < square ||
+        snakeX > square * 17 ||
+        snakeY < square * 3 ||
+        snakeY > square * 17 ||
+        collision(newSquare, snake)
+    ) {
+        gameOver = true;
+        menuGameOver.classList.toggle("hide");
         deadsound.play();
-        clearInterval(game);
-        ctx.drawImage(gameOver, 0, 0, 512, 371, canvas.width / 2 - 100, canvas.height / 2 - 200, 200, 200);
-        sound = false;
-        //snake();
     }
 
-    snake.unshift(newSquare);
-
     //Criação do número de score no canvas
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "40px impact";
-    //Posição do número
-    ctx.fillText(score, square * 2.5, square * 1.7);
 
-
-    //draw da comida
-    ctx.drawImage(food, 0, 0, square, square, foodPos.x, foodPos.y, square, square);
-
+    snake.unshift(newSquare);
 }
-
 
 //criação do loop da imagem
 function loop() {
     ctx.drawImage(floor, 0, 0, 608, 608, 0, 0, 608, 608);
-    draw();
+    if (!gameOver && !pause) {
+        draw();
+    }
+    drawScore();
+    drawFood();
+    drawSnake();
 }
 
-
 let game = setInterval(loop, 150);
-
-
