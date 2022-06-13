@@ -154,12 +154,12 @@ function draw() {
         //Incrementar score
         score++;
     } else {
-        //remove a comdia e volta a criar
+        //remove a comida e volta a criar
         snake.pop();
     }
 
     //Vai verificar se a colisão é verdadeira ou falsa
-    function collision(array) {
+    function collision(newSquare, array) {
         for (let i = 0; i < array.length; i++) {
             if (newSquare.x == array[i].x && newSquare.y == array[i].y) {
                 return true;
@@ -176,7 +176,6 @@ function draw() {
         score = 0;
         move = null;
         snake = [];
-
         snake[0] = {
             x: 4 * 32,
             y: 7 * 32,
@@ -195,6 +194,7 @@ function draw() {
         gameOver = true;
         menuGameOver.classList.toggle("hide");
         deadsound.play();
+        sound = false;
     }
     //Criação do número de score no canvas
     snake.unshift(newSquare);
@@ -212,4 +212,4 @@ function loop() {
     drawSnake();
 }
 
-let game = setInterval(loop, 150);
+let game = setInterval(loop, 100);
