@@ -60,7 +60,7 @@ div#menuGameOver{
     height: 166px;
     width: 175px;
     background-position: center center;
-    background-image: url("/images/snake.gif"), linear-gradient(#ff0000,#590000, black);
+    background-image: url("./images/snake.gif"), linear-gradient(#ff0000,#590000, black);
 }
 
 .restart{
