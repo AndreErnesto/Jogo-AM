@@ -211,4 +211,80 @@ function loop() {
     drawSnake();
 }
 
+function draw() {
+    //ver a posição anterior da snake e mover
+
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
+
+    if (move == "left") {
+        snakeX -= square;
+    } else if (move == "top") {
+        snakeY -= square;
+    } else if (move == "right") {
+        snakeX += square;
+    } else if (move == "down") {
+        snakeY += square;
+    }
+
+    //Ciração de novo quadrado
+    let newSquare = {
+        x: snakeX,
+        y: snakeY,
+    };
+
+    //detetar colisão com a comida
+    if (snakeX == foodPos.x && snakeY == foodPos.y) {
+        eatsound.play();
+        foodPos.x = Math.floor(Math.random() * 17 + 1) * square;
+        foodPos.y = Math.floor(Math.random() * 15 + 3) * square;
+        //Incrementar score
+        score++;
+    } else {
+        //remove a comida e volta a criar
+        snake.pop();
+    }
+
+    //Vai verificar se a colisão é verdadeira ou falsa
+    function collision(newSquare, array) {
+        for (let i = 0; i < array.length; i++) {
+            if (newSquare.x == array[i].x && newSquare.y == array[i].y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Restart no botão
+
+    let btnRestart = document.getElementById("restart");
+    btnRestart.addEventListener("click", function () {
+        gameOver = false;
+        score = 0;
+        move = null;
+        snake = [];
+        snake[0] = {
+            x: 4 * 32,
+            y: 7 * 32,
+        };
+        menuGameOver.classList.toggle("hide");
+    });
+
+    //Criar colisões na paredes para acabar com o jogo
+    if (
+        snakeX < square ||
+        snakeX > square * 17 ||
+        snakeY < square * 3 ||
+        snakeY > square * 17 ||
+        collision(newSquare, snake)
+    ) {
+        gameOver = true;
+        menuGameOver.classList.toggle("hide");
+        deadsound.play();
+        sound = false;
+    }
+    //Criação do número de score no canvas
+    snake.unshift(newSquare);
+}
+
 let game = setInterval(loop, 100);
